@@ -1,40 +1,54 @@
-export default function Home({ wisata }) {
+import { useMemo, useState } from "react";
+import Navbar from "../Components/Navbar";
+import HeroSection from "../Components/HeroSection";
+import SearchSection from "../Components/SearchSection";
+import AiAssistantSection from "../Components/AiAssistantSection";
+import DestinationSection from "../Components/DestinationSection";
+import Footer from "../Components/Footer";
+
+export default function Home({ wisata = [] }) {
+    const [search, setSearch] = useState("");
+
+    const filteredWisata = useMemo(() => {
+        const keyword = search.trim().toLowerCase();
+
+        if (!keyword) return wisata;
+
+        return wisata.filter((item) =>
+            [
+                item.nama_wisata,
+                item.kategori?.nama_kategori,
+                item.kabupaten?.nama_kabupaten,
+                item.alamat,
+            ]
+                .filter(Boolean)
+                .some((value) => String(value).toLowerCase().includes(keyword)),
+        );
+    }, [wisata, search]);
+
     return (
-        <main className="min-h-screen bg-[#F7F3EA] px-6 py-16 text-[#18392B]">
-            <div className="mx-auto max-w-5xl">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#C87941]">
-                    Katalog Wisata Lampung
-                </p>
+        <main className="min-h-screen bg-[#F8F7F2] text-[#18392B]">
+            {/* Navbar */}
+            <Navbar />
 
-                <h1 className="mt-4 text-4xl font-bold tracking-tight">
-                    Jelajahi Lampung
-                </h1>
+            {/* Hero */}
+            <HeroSection jumlahWisata={wisata.length} />
 
-                <p className="mt-3 text-lg">
-                    Temukan destinasi wisata favoritmu.
-                </p>
+            {/* Search and AI */}
+            <section className="mx-auto grid max-w-7xl gap-5 px-5 py-12 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
+                <SearchSection search={search} setSearch={setSearch} />
+                <AiAssistantSection />
+            </section>
 
-                <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    {wisata.map((item) => (
-                        <article
-                            key={item.id_wisata}
-                            className="rounded-2xl border border-[#18392B]/10 bg-white/70 p-5 shadow-sm"
-                        >
-                            <h2 className="text-xl font-semibold">
-                                {item.nama_wisata}
-                            </h2>
+            {/* Destination list */}
+            <DestinationSection
+                wisata={filteredWisata}
+                search={search}
+                setSearch={setSearch}
+            />
 
-                            <p className="mt-2 text-sm text-[#18392B]/70">
-                                {item.alamat}
-                            </p>
-
-                            <p className="mt-4 text-sm font-medium">
-                                ★ {item.rating}
-                            </p>
-                        </article>
-                    ))}
-                </div>
-            </div>
+            {/* Footer */}
+            <Footer />
         </main>
     );
 }

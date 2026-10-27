@@ -17,4 +17,12 @@ class Wisata extends Model
             'id_kategori'
         );
     }
+
+    public function kabupaten(){
+        return $this->belongsTo(
+            Kabupaten::class,
+            'kabupaten_id',
+            'id_kabupaten'
+        );
+    }
 }
