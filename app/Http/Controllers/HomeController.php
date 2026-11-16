@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Wisata;
 use Illuminate\Http\Request;
+use App\Models\Kategori;
+use App\Models\Kabupaten;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -13,8 +15,10 @@ class HomeController extends Controller
         ->orderByDesc('rating')
         ->get();
 
-        return Inertia::render('Home', [
-            'wisata' => $wisata
-        ]);
+    return Inertia::render('Home', [
+        'wisata' => $wisata,
+        'kategoris' => Kategori::orderBy('nama_kategori')->get(),
+        'kabupatens' => Kabupaten::orderBy('nama_kabupaten')->get(),
+    ]);
     }
 }

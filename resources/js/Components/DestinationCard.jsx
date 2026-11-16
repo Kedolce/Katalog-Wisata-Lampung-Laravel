@@ -14,7 +14,7 @@ export default function DestinationCard({ item }) {
 
     return (
         <article className="group overflow-hidden rounded-3xl border border-[#18392B]/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#18392B]/10">
-            <div className="relative h-56 overflow-hidden bg-gradient-to-br from-[#D9E4D5] via-[#A8C3AC] to-[#557B61]">
+            <div className="relative h-56 overflow-hidden bg-linear-to-br from-[#D9E4D5] via-[#A8C3AC] to-[#557B61]">
                 {imageUrl && !imageError ? (
                     <img
                         src={imageUrl}
