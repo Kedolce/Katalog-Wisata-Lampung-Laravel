@@ -56,7 +56,7 @@ export default function SearchSection({ search, setSearch, wisata = [] }) {
     };
 
     return (
-        <div className="relative rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/10 backdrop-blur-xl sm:p-5">
+        <div className="relative rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/10 backdrop-blur-lg sm:p-5">
             {/* Search Bar */}
             <form onSubmit={handleSubmit}>
                 <div className="flex min-h-14 items-center gap-3 rounded-xl bg-white/10 px-4">
