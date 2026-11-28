@@ -1,89 +1,197 @@
-import { useEffect, useState } from "react";
 
-const navItems = [
-    { label: "Jelajah AI", id: "ai" },
-    { label: "Rekomendasi", id: "rekomendasi" },
-    { label: "Katalog Wisata", id: "destinasi" },
-];
+import { useState } from "react";
 
 export default function Navbar() {
-    const [activeMenu, setActiveMenu] = useState("destinasi");
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const sections = navItems
-            .map((item) => document.getElementById(item.id))
-            .filter(Boolean);
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSection = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort(
-                        (a, b) =>
-                            b.intersectionRatio - a.intersectionRatio,
-                    )[0];
-
-                if (visibleSection) {
-                    setActiveMenu(visibleSection.target.id);
-                }
-            },
-            {
-                rootMargin: "-20% 0px -65% 0px",
-                threshold: 0,
-            },
-        );
-
-        sections.forEach((section) => observer.observe(section));
-
-        return () => observer.disconnect();
-    }, []);
+    const closeMenu = () => setMenuOpen(false);
 
     return (
-        <header className="sticky top-0 z-50 border-b border-[#18392B]/10 bg-[#F8F7F2]/95 backdrop-blur-md">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-
-                {/* Brand */}
-                <a href="/" className="flex shrink-0 items-center gap-2.5">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#064E3B] text-sm font-bold text-white">
-                        JL
-                    </span>
-
-                    <span>
-                        <span className="block text-sm font-bold leading-tight text-[#18392B]">
-                            Jelajah Lampung
-                        </span>
-                        <span className="block text-[10px] tracking-[0.16em] text-[#647567]">
-                            BUMI RUWA JURAI
-                        </span>
-                    </span>
-                </a>
-
-                {/* Desktop Navigation */}
-                <div className="hidden items-center gap-1 rounded-full border border-[#18392B]/5 bg-white/70 p-1 md:flex">
-                    {navItems.map((item) => (
-                        <a
-                            key={item.id}
-                            href={`#${item.id}`}
-                            onClick={() => setActiveMenu(item.id)}
-                            className={`rounded-full px-4 py-2.5 text-sm transition ${
-                                activeMenu === item.id
-                                    ? "bg-[#064E3B] font-medium text-white"
-                                    : "text-[#526258] hover:bg-[#18392B]/5 hover:text-[#064E3B]"
-                            }`}
-                        >
-                            {item.label}
-                        </a>
-                    ))}
-                </div>
-
-                {/* AI Action */}
+        <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-5 sm:px-5">
+            <nav className="relative mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/20 bg-white/10 px-4 py-3 text-white shadow-lg shadow-black/5 backdrop-blur-xl sm:px-6 sm:py-4">
                 <a
-                    href="#ai"
-                    onClick={() => setActiveMenu("ai")}
-                    className="shrink-0 rounded-full bg-[#064E3B] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#28543F] sm:px-5 sm:text-sm"
+                    href="/"
+                    onClick={closeMenu}
+                    className="text-base font-semibold tracking-wider sm:text-xl"
                 >
-                    Tanya Si Gajah
+                    RUWALOKA
                 </a>
+
+                {/* Desktop menu */}
+                <ul className="hidden items-center gap-7 text-sm font-medium md:flex">
+                    <li>
+                        <a
+                            href="#destinasi"
+                            className="flex items-center gap-2 transition hover:text-white/70"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.7"
+                                className="h-4 w-4"
+                                aria-hidden="true"
+                            >
+                                <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+                                <circle cx="12" cy="10" r="2.5" />
+                            </svg>
+                            Destinasi
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#ai"
+                            className="flex items-center gap-2 transition hover:text-white/70"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.7"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="h-4 w-4"
+                                aria-hidden="true"
+                            >
+                                <path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z" />
+                                <path d="m19 14 1 2.5 2.5 1-2.5 1L19 21l-1-2.5-2.5-1 2.5-1L19 14Z" />
+                            </svg>
+                            Tanya AI
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#tentang"
+                            className="flex items-center gap-2 transition hover:text-white/70"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.7"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="h-4 w-4"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 16v-4" />
+                                <path d="M12 8h.01" />
+                            </svg>
+                            Tentang
+                        </a>
+                    </li>
+                </ul>
+
+                {/* Mobile menu button */}
+                <button
+                    type="button"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
+                    aria-expanded={menuOpen}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 transition hover:bg-white/20 md:hidden"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        className="h-5 w-5"
+                    >
+                        {menuOpen ? (
+                            <path d="m18 6-12 12M6 6l12 12" />
+                        ) : (
+                            <path d="M4 7h16M4 12h16M4 17h16" />
+                        )}
+                    </svg>
+                </button>
+
+                {/* Mobile dropdown */}
+                {menuOpen && (
+                    <ul className="absolute left-0 right-0 top-full mt-3 flex flex-col gap-1 rounded-2xl border border-white/20 bg-[#18392B] p-3 text-sm font-medium shadow-xl backdrop-blur-xl md:hidden">
+                        <li>
+                            <a
+                                href="#destinasi"
+                                onClick={closeMenu}
+                                className="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-white/10"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.7"
+                                    className="h-4 w-4"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+                                    <circle cx="12" cy="10" r="2.5" />
+                                </svg>
+                                Destinasi
+                            </a>
+                        </li>
+
+                        <hr className="border-white/10" />
+
+                        <li>
+                            <a
+                                href="#ai"
+                                onClick={closeMenu}
+                                className="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-white/10"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.7"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="h-4 w-4"
+                                    aria-hidden="true"
+                                >
+                                    <path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z" />
+                                    <path d="m19 14 1 2.5 2.5 1-2.5 1L19 21l-1-2.5-2.5-1 2.5-1L19 14Z" />
+                                </svg>
+                                Tanya AI
+                            </a>
+                        </li>
+
+                        <hr className="border-white/10" />
+
+                        <li>
+                            <a
+                                href="#tentang"
+                                onClick={closeMenu}
+                                className="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-white/5"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.7"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="h-4 w-4"
+                                    aria-hidden="true"
+                                >
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 16v-4" />
+                                    <path d="M12 8h.01" />
+                                </svg>
+                                Tentang
+                            </a>
+                        </li>
+                    </ul>
+                )}
             </nav>
         </header>
     );

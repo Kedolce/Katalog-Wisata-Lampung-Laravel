@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 
 export default function SearchSection({ search, setSearch, wisata = [] }) {
@@ -24,9 +25,7 @@ export default function SearchSection({ search, setSearch, wisata = [] }) {
                     ];
 
                     const matched = fields.some((value) =>
-                        String(value ?? "")
-                            .toLowerCase()
-                            .includes(keyword),
+                        String(value ?? "").toLowerCase().includes(keyword),
                     );
 
                     return matched ? item : null;
@@ -56,11 +55,13 @@ export default function SearchSection({ search, setSearch, wisata = [] }) {
     };
 
     return (
-        <div className="relative rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/10 backdrop-blur-lg sm:p-5">
+        <div className="relative rounded-2xl border border-white/20 bg-white/5 p-2 shadow-2xl shadow-black/10 backdrop-blur-sm sm:p-5">
             {/* Search Bar */}
             <form onSubmit={handleSubmit}>
-                <div className="flex min-h-14 items-center gap-3 rounded-xl bg-white/10 px-4">
-                    <span className="text-2xl text-white/60">⌕</span>
+                <div className="flex min-h-12 items-center gap-2 rounded-xl bg-white/10 px-3 sm:min-h-14 sm:gap-3 sm:px-4">
+                    <span className="shrink-0 text-xl text-white/60 sm:text-2xl">
+                        ⌕
+                    </span>
 
                     <input
                         type="text"
@@ -70,14 +71,14 @@ export default function SearchSection({ search, setSearch, wisata = [] }) {
                             setShowSuggestions(true);
                         }}
                         onFocus={() => setShowSuggestions(true)}
-                        placeholder="Cari pantai, gunung, atau destinasi..."
-                        className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/60"
+                        placeholder="Cari destinasi wisata..."
+                        className="min-w-0 flex-1 bg-transparent text-xs text-white outline-none placeholder:text-white/60 sm:text-sm"
                     />
 
                     <button
                         type="submit"
                         aria-label="Cari destinasi"
-                        className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border bg-white/15 border-white/30 hover:bg-white/25 text-white shadow-sm transition "
+                        className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white/15 text-white shadow-sm transition hover:bg-white/25 sm:h-10 sm:w-10"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -112,18 +113,20 @@ export default function SearchSection({ search, setSearch, wisata = [] }) {
                                     onClick={() => handleSelect(item)}
                                     className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left transition hover:bg-[#18392B]/5"
                                 >
-                                    <div>
-                                        <p className="text-sm font-semibold text-[#18392B]">
+                                    <div className="min-w-0">
+                                        <p className="truncate text-sm font-semibold text-[#18392B]">
                                             {item.nama_wisata}
                                         </p>
-                                        <p className="mt-1 text-xs text-[#647567]">
+                                        <p className="mt-1 truncate text-xs text-[#647567]">
                                             {item.kategori?.nama_kategori}
                                             {item.kabupaten?.nama_kabupaten &&
                                                 ` · ${item.kabupaten.nama_kabupaten}`}
                                         </p>
                                     </div>
 
-                                    <span className="text-[#647567]">↗</span>
+                                    <span className="ml-3 shrink-0 text-[#647567]">
+                                        ↗
+                                    </span>
                                 </button>
                             ))}
                         </>

@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 
+
 export default function DestinationCard({ item }) {
     const [imageError, setImageError] = useState(false);
 
@@ -38,7 +39,7 @@ export default function DestinationCard({ item }) {
                     {item.kategori?.nama_kategori ?? "Wisata"}
                 </span>
 
-                <span className="absolute bottom-4 right-4 rounded-full bg-[#18392B]/90 px-3 py-1.5 text-sm font-semibold text-white">
+                <span className="absolute bottom-4 right-4 rounded-full bg-[#18392B]/90 px-3 py-1.5 text-sm font-semibold text-yellow-400">
                     ★ {item.rating ?? "—"}
                 </span>
             </div>

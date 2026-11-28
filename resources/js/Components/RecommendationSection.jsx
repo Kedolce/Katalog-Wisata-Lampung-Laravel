@@ -1,49 +1,54 @@
-
-import DestinationCard from "./DestinationCard";
+import RecommendationCard from "./RecommendationCard";
 
 export default function RecommendationSection({ wisata = [] }) {
     const rekomendasi = [...wisata]
         .sort((a, b) => Number(b.rating) - Number(a.rating))
-        .slice(0, 4);
+        .slice(0, 5);
+
+    const cardLayouts = [
+        "lg:translate-y-6",
+        "lg:-translate-y-3",
+        "lg:translate-y-8",
+        "lg:-translate-y-5",
+        "lg:translate-y-4",
+    ];
 
     return (
         <section
             id="rekomendasi"
-            className="scroll-mt-24"
+            className="relative z-10 -mt-8 scroll-mt-24 pb-20 sm:-mt-12"
         >
-            <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+            <div className="mx-auto max-w-7xl px-5 sm:px-8">
+                <div
+                    className="
+                        flex snap-x snap-mandatory gap-3
+                        overflow-x-auto px-5 pb-8
+                        [scrollbar-width:none]
+                        [&::-webkit-scrollbar]:hidden
 
-                {/* Section Header */}
-                <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C87941]">
-                            Pilihan Terbaik
-                        </span>
+                        md:grid md:grid-cols-5
+                        md:gap-3 md:overflow-visible md:px-0
 
-                        <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#18392B] sm:text-3xl">
-                            Rekomendasi untuk Dijelajahi
-                        </h2>
-
-                        <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#647567]">
-                            Temukan destinasi wisata Lampung dengan rating terbaik.
-                        </p>
-                    </div>
-
-                    <a
-                        href="#destinasi"
-                        className="text-sm font-semibold text-[#064E3B] transition hover:text-[#C87941]"
-                    >
-                        Lihat semua destinasi →
-                    </a>
-                </div>
-
-                {/* Recommendation Cards */}
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {rekomendasi.map((item) => (
-                        <DestinationCard
+                        lg:gap-5
+                    "
+                >
+                    {rekomendasi.map((item, index) => (
+                        <div
                             key={item.id_wisata}
-                            item={item}
-                        />
+                            className={`
+                                h-[230px] w-[175px] shrink-0
+                                snap-start
+
+                                sm:h-[250px] sm:w-[190px]
+
+                                md:h-[290px] md:w-auto md:min-w-0
+
+                                lg:h-[340px]
+                                ${cardLayouts[index]}
+                            `}
+                        >
+                            <RecommendationCard item={item} />
+                        </div>
                     ))}
                 </div>
             </div>

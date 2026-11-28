@@ -1,16 +1,11 @@
-// Holy AI, now i dont even know what im witnessing. only god did.
-// i only tell AI what to build, the workflow, the design. not the code omg.
-// im cooked for interview TBH
 
-// rn i trying to learn the code and data flow.
 
 import { useMemo, useState } from "react";
 import Navbar from "../Components/Navbar";
 import HeroSection from "../Components/HeroSection";
 import SearchSection from "../Components/SearchSection";
-import AiAssistantSection from "../Components/AiAssistantSection";
-import RecommendationSection from "../Components/RecommendationSection";
 import DestinationSection from "../Components/DestinationSection";
+import RecommendationSection from "../Components/RecommendationSection";
 import Footer from "../Components/Footer";
 
 export default function Home({ wisata = [], kategoris = [], kabupatens = [] }) {
@@ -29,10 +24,11 @@ export default function Home({ wisata = [], kategoris = [], kabupatens = [] }) {
                     item.kategori?.nama_kategori,
                     item.kabupaten?.nama_kabupaten,
                     item.alamat,
+                    item.deskripsi,
                 ]
                     .filter(Boolean)
                     .some((value) =>
-                        String(value).toLowerCase().includes(keyword),
+                        String(value ?? "").toLowerCase().includes(keyword),
                     );
 
             const cocokKategori =
@@ -48,15 +44,12 @@ export default function Home({ wisata = [], kategoris = [], kabupatens = [] }) {
     }, [wisata, search, selectedKategori, selectedKabupaten]);
 
     return (
-        <main className="min-h-screen bg-[#F8F7F2] text-[#18392B]">
+        <main className="relative min-h-screen bg-[#F8F7F2] text-[#18392B]">
             {/* Navbar */}
             <Navbar />
 
             {/* Hero */}
-            <HeroSection jumlahWisata={
-                wisata.length}
-                wisata={wisata}
-            >
+            <HeroSection wisata={wisata}>
                 <div className="relative mx-auto max-w-7xl px-5 pb-12 sm:px-8">
                     <SearchSection
                         search={search}
@@ -71,18 +64,13 @@ export default function Home({ wisata = [], kategoris = [], kabupatens = [] }) {
                 </div>
             </HeroSection>
 
-            {/* AI Assistant */}
-            <section id="ai" className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
-                <AiAssistantSection />
-            </section>
-
-            <RecommendationSection wisata={wisata} />
-
             <DestinationSection
                 wisata={filteredWisata}
                 search={search}
                 setSearch={setSearch}
             />
+
+            <RecommendationSection wisata={wisata} />
 
             {/* Footer */}
             <Footer />
